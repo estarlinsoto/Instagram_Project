@@ -55,7 +55,7 @@ def register():
        "MSG": "user created!" }), 201
 
 @api.route('/login', methods=['POST'])
-def get_token():
+def login():
     
         username = request.json.get('username')
         password = request.json.get('password')
@@ -81,5 +81,57 @@ def get_token():
             access_token = create_access_token(identity= username_from_db.id)
             return jsonify({
                 'access_token': access_token,
-                'msg': 'success'
-                }), 200 
+                'msg': 'success'}), 200 
+        
+
+@api.route('/publish_post', methods=['POST'])
+def publish_post():
+    image = request.json.get('image', None)
+    message = request.json.get('message', None)
+    likes = request.json.get('likes', None)
+    author = request.json.get('author', None)
+    location = request.json.get('location', None)
+    status = request.json.get('status', None)
+
+    if not image or not message or not author or not location:
+        return jsonify({"msg": "Missing post information"}), 400
+
+    new_post = Post(
+        image=image,
+        message=message,
+        author=author,
+        location=location,
+        status = status
+        
+    )
+
+    db.session.add(new_post)
+    db.session.commit()
+
+    return jsonify({
+       "MSG": "post created!" }), 201
+
+
+@api.route('/get_all_posts', methods=['GET'])
+def get_all_posts():
+    query = Post.query.order_by(Post.created_at.desc()).all()
+    
+    all_post = [{
+        'id': post.id,
+        'image': post.image,
+        'message': post.message,
+        'likes': post.likes,
+        'author': post.author,
+        'created_at': post.created_at,
+        "location": post.location,
+        "status": post.status
+        
+
+    } for post in query]
+
+
+    if len(all_post) == 0 :
+        
+        return jsonify({'msg': 'no post in db'}), 200
+    
+    return jsonify(all_post), 200
