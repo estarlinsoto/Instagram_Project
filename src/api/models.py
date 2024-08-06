@@ -29,11 +29,12 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image  = db.Column(db.String(160), unique=False, nullable=False)
     message = db.Column(db.String(500), unique=False, nullable=False)
-    likes = db.Column(ARRAY(db.String), nullable=True)
-    author = db.Column(db.String(50), unique=True, nullable=False)
+    author = db.Column(db.String(50), unique=False, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     location = db.Column(db.String(30), unique=False, nullable=False)
     status = db.Column(db.String(50), unique=False, nullable=False)
+
+
 
 
     def serialize(self):
@@ -49,6 +50,12 @@ class Post(db.Model):
 
 
         }
+
+
+class Likes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    likes = db.Column(db.String(50), unique=False, nullable=True)
+    post_id = db.Column(db.Integer, nullable=False)
 
 
 
