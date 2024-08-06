@@ -57,7 +57,7 @@ export const Login = () => {
 
 
             <div className={style.logo_box}>
-                <Link to='/' className={style.logo_login}>DTECH INC</Link>
+                <Link to='/login' className={style.logo_login}>DTECH INC</Link>
             </div>
             <div className={style.welcome}>
                 <p>Welcome!</p>
@@ -66,9 +66,9 @@ export const Login = () => {
 
 
                 <div className={style.form_floating}>
-                    {msg.length == 0 ? "" : <div class="alert alert-danger" role="alert">{msg}</div>}
+                    {msg.length == 0 ? "" : <div className="alert alert-danger" role="alert">{msg}</div>}
                     {redirectMsg.length == 0 ? "" :
-                        <div class="alert alert-warning" role="alert">
+                        <div className="alert alert-warning" role="alert">
                             User not pay, redirecting to paypal...
                             <div className="spinner-border text-light mx-2" role="status">
                             </div>
@@ -101,7 +101,7 @@ export const Login = () => {
                 <button className={style.btn} onClick={() => sendLoginForm()}>Submit</button>
 
                 <div className={style.m_3}>
-                    <Link className={style.text_danger} to="/signup">Not registered?</Link>
+                    <Link className={style.text_danger} to="/register">Not registered?</Link>
                 </div>
             </div>
 

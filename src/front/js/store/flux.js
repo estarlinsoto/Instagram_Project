@@ -38,6 +38,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							setStore({ store: store.loginRes = "username don't exist" })
 							throw Error(res.statusText)
 						}
+						
 					})
 					.then((data) => {
 						sessionStorage.setItem("access_token", data.access_token);

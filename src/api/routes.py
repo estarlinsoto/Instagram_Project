@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Post
+from api.models import db, User, Post, Likes
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
@@ -90,20 +90,21 @@ def login():
 def publish_post():
     image = request.json.get('image', None)
     message = request.json.get('message', None)
-    likes = request.json.get('likes', None)
     author = request.json.get('author', None)
     location = request.json.get('location', None)
     status = request.json.get('status', None)
 
     if not image or not message or not author or not location:
         return jsonify({"msg": "Missing post information"}), 400
+    if len(message) > 200:
+        return jsonify({"msg": "message length is too long"}), 400
 
     new_post = Post(
         image=image,
         message=message,
         author=author,
         location=location,
-        status = status
+        status = status,
         
     )
 
@@ -123,7 +124,6 @@ def get_all_posts():
         'id': post.id,
         'image': post.image,
         'message': post.message,
-        'likes': post.likes,
         'author': post.author,
         'created_at': post.created_at,
         "location": post.location,
@@ -139,40 +139,63 @@ def get_all_posts():
     
     return jsonify(all_post), 200
 
-@api.route('/like_post', methods=['PUT'])
+@api.route('/get_all_users', methods=['GET'])
 @jwt_required()
-def like_post():
-    # Get the current user's identity from JWT
+def get_all_user():
+    query = User.query.all()
+    
+    all_users = [{
+        'id': user.id,
+        'name': user.name,
+        'surname': user.surname,
+        'username': user.username,
+        'avatar': user.avatar,
+        
+
+    } for user in query]
+
+
+    if len(all_users) == 0 :
+        
+        return jsonify({'msg': 'no users in db'}), 200
+    
+    return jsonify(all_users), 200
+
+@api.route('/like_post/<int:post_id>', methods=['POST'])
+@jwt_required()
+def like_post(post_id):
+    
     user_validation = get_jwt_identity()
-    user_from_db = User.query.get(user_validation)
+    user_from_db = User.query.filter_by(username = user_validation).first()
+    like = Likes.query.filter_by(likes = user_from_db.username)
+
+    if like:
+        return jsonify({
+            "msg": "this user already liked this post"
+        }), 400 
     
     if not user_from_db:
         return jsonify({"msg": "User not found"}), 404
 
-    user_from_db = user_from_db.username
-    post_id = request.json.get('post_id')
-
-    # Get the post object from the database
-    post = Post.query.get(post_id)
+    post = Post.query.filter_by(id = post_id).first()
     
     if not post:
         return jsonify({"msg": "Post not found"}), 404
-
-    # Check if the user has already liked the post
-    if user_from_db in post.likes:
-        return jsonify({"msg": "User has already liked this post"}), 400
-
-    # Add the user to the likes array
-    post.likes.append(user_from_db)
     
-    # Commit the changes to the database
-    db.session.commit()
+    new_like = Likes(
+        post_id = post_id,
+        likes = user_from_db.username
+    )
+    db.session.add(new_like)
+
+    
+    #db.session.commit()
 
     return jsonify({
        "MSG": "Post liked",
-       "current_likes": post.likes,
        
-    }), 200
+       
+    }), 201
 
 @api.route('/get_by_id', methods=['GET'])
 @jwt_required()
