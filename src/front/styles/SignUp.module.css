@@ -1,0 +1,107 @@
+.custom_container {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #141414;
+}
+
+.link {
+    margin-bottom: 50px;
+    text-decoration: none;
+}
+h4 {
+    
+    font-size: 4rem;
+    background-color: #ff8177;
+    background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    margin-top: 50px;
+}
+
+.custom_form_container {
+    margin-bottom: 0px;
+}
+
+h1 {
+    font-size: 3rem;
+    background-color: #ff8177;
+    background-image: linear-gradient(to top, #b721ff 0%, #21d4fe 100%);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+
+
+
+.custom_alert {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.custom_form_item {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.custom_label {
+    display: block;
+    margin-bottom: 5px;
+    color: #f7eccd;
+    text-align: center;
+}
+
+.custom_input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    font-weight: 600 ;
+}
+
+.custom_btn {
+    background: #dd6052;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.custom_btn:hover {
+    background: #37f5ff;
+    transition: all 0.3s ease;
+}
+
+.warning_message {
+    font-size: 1rem;
+    background-color: #ff8177;
+    background-image: linear-gradient(to top, #b721ff 0%, #21d4fe 100%);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    margin-top: 50px;
+}
+
+.msg {
+    color: white;
+    margin-bottom: 50px;
+}

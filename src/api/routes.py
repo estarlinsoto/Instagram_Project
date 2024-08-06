@@ -54,6 +54,7 @@ def register():
        "access_token": access_token,
        "MSG": "user created!" }), 201
 
+
 @api.route('/login', methods=['POST'])
 def login():
     
@@ -62,7 +63,7 @@ def login():
 
 
         if not username or not password:
-            return jsonify({'error': 'usernae and password are required.'}), 400
+            return jsonify({'error': 'username and password are required.'}), 400
 
         username_from_db = User.query.filter_by(username= username).first()
 
@@ -83,6 +84,7 @@ def login():
                 'access_token': access_token,
                 'msg': 'success'}), 200 
         
+
 
 @api.route('/publish_post', methods=['POST'])
 def publish_post():
@@ -113,6 +115,7 @@ def publish_post():
 
 
 @api.route('/get_all_posts', methods=['GET'])
+@jwt_required()
 def get_all_posts():
     query = Post.query.order_by(Post.created_at.desc()).all()
     
@@ -135,3 +138,51 @@ def get_all_posts():
         return jsonify({'msg': 'no post in db'}), 200
     
     return jsonify(all_post), 200
+
+@api.route('/like_post', methods=['PUT'])
+@jwt_required()
+def like_post():
+    # Get the current user's identity from JWT
+    user_validation = get_jwt_identity()
+    user_from_db = User.query.get(user_validation)
+    
+    if not user_from_db:
+        return jsonify({"msg": "User not found"}), 404
+
+    user_from_db = user_from_db.username
+    post_id = request.json.get('post_id')
+
+    # Get the post object from the database
+    post = Post.query.get(post_id)
+    
+    if not post:
+        return jsonify({"msg": "Post not found"}), 404
+
+    # Check if the user has already liked the post
+    if user_from_db in post.likes:
+        return jsonify({"msg": "User has already liked this post"}), 400
+
+    # Add the user to the likes array
+    post.likes.append(user_from_db)
+    
+    # Commit the changes to the database
+    db.session.commit()
+
+    return jsonify({
+       "MSG": "Post liked",
+       "current_likes": post.likes,
+       
+    }), 200
+
+@api.route('/get_by_id', methods=['GET'])
+@jwt_required()
+def get_by_id():
+    user_validation = get_jwt_identity()
+    user_from_db = User.query.get(user_validation)
+
+    if not user_from_db:
+        return jsonify({"msg": "this username not exist"})
+    
+    query = User.query.filter_by(id = user_from_db.id ).first()
+    
+    return jsonify(query.username), 200

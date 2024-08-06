@@ -1,0 +1,121 @@
+.container {
+    
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #141414;
+}
+
+.logo_box {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+
+
+}
+
+.welcome {
+    font-size: 2rem;
+    background-color: #ff8177;
+    background-image: linear-gradient(to top, #b721ff 0%, #21d4fe 100%);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    
+}
+
+.logo_login {
+    margin-bottom: 0px;
+    text-decoration: none;
+    font-size: 3rem;
+    background-color: #ff8177;
+    background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+
+}
+
+
+.form_container {
+    margin: auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.form_container_trainer{
+    margin: auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+}
+
+.form_floating {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form_control {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form_control:focus {
+    border-color: #6c63ff;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    background: #dc3b29;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    
+}
+
+.btn:hover {
+    background: #37f5ff;
+    transition: all 0.3s ease;
+}
+
+.m_3 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.text_danger {
+    color: #030303;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.text_danger:hover {
+    color: #1100ff;
+}
