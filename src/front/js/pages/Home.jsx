@@ -40,60 +40,47 @@ export const Home = () => {
 	return (
 		<div className="text-center mt-5">
 
+			<button type="button" className="btn btn-primary my-5 " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+				Make a post!
+			</button>
+
+
 			<div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 				<div className="modal-dialog">
 					<div className="modal-content">
-						<div className="modal-header">
-							<h1 className="modal-title fs-5" id="staticBackdropLabel">Share a post</h1>
+						<div className="modal-header text-center">
+							<h1 className="modal-title fs-5 text-center" id="staticBackdropLabel">Make a post!!</h1>
 							<button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div className="modal-body">
-						
-
-							<div className="mb-3">
-								<label for="basic-url" className="form-label">Image</label>
-								<div className="input-group">
-									<span className="input-group-text" id="basic-addon3">https://example.com/users/</span>
-									<input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4"></input>
+							<form className="form-container">
+								<div className="mb-3">
+									<label for="exampleInputEmail1" className="form-label">Email address</label>
+									<input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"></input>
+									<div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
 								</div>
-								<div className="form-text" id="basic-addon4">Example help text goes outside the input group.</div>
-							</div>
-
-							<div className="input-group mb-3">
-								<span className="input-group-text">$</span>
-								<input type="text" className="form-control" aria-label="Amount (to the nearest dollar)"></input>
-								<span className="input-group-text">.00</span>
-							</div>
-
-							<div className="input-group mb-3">
-								<input type="text" className="form-control" placeholder="Username" aria-label="Username"></input>
-								<span className="input-group-text">@</span>
-								<input type="text" className="form-control" placeholder="Server" aria-label="Server"></input>
-							</div>
-
-							<div className="input-group">
-								<span className="input-group-text">Message</span>
-								<textarea className="form-control" aria-label="With textarea"></textarea>
-							</div>
+								<div className="mb-3">
+									<label for="exampleInputPassword1" className="form-label">Password</label>
+									<input type="password" className="form-control" id="exampleInputPassword1"></input>
+								</div>
+								<div className="mb-3 form-check">
+									<input type="checkbox" className="form-check-input" id="exampleCheck1"></input>
+									<label className="form-check-label" for="exampleCheck1">Check me out</label>
+								</div>
+								<button type="submit" className="btn btn-primary">Submit</button>
+							</form>
 						</div>
-						<div classNameName="modal-footer">
+						<div className="modal-footer">
 							<button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-							<button type="button" className="btn btn-primary m-2">Submit</button>
+							<button type="button" className="btn btn-primary">Understood</button>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			{
-				store.allPosts.length == 0 ? "" :
-					<button type="button" className="btn btn-primary my-5 " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-						Make a post!
-					</button>
-			}
-			{store.allPosts.length == 0 ? "Loading" : store.allPosts.map((post, index) => (
 
+			{store.allPosts.length == 0 ? "Loading" : store.allPost !== "no post in db" || store.allPost !== "Token expired" ? "No posts yet :(" : store.allPosts.map((post, index) => (
 				<div className="card mx-auto mb-4" style={{ maxWidth: "600px" }} key={index}>
-
 					<div className="card-header d-flex align-items-center">
 						<img
 							src='https://fastly.picsum.photos/id/228/200/300.jpg?hmac=A6oUMz6rMYY00q0GJfUDf_sU2uPTrqbUHVQykZQtZDU'
@@ -110,7 +97,7 @@ export const Home = () => {
 					<img src={post.image} className="card-img-top" alt="Post" />
 					<button className="btn btn-primary btn-sm">Like</button>
 					<div className="card-body">
-						<div className="likes-container">{0}</div>
+						<div className="likes-container">{post.likes.length == 0 ? "No one likes this" : post.likes}</div>
 						<p className="card-text">{post.message}</p>
 						<p className="card-text">
 							<small className="text-muted">{getTimeAgo(post.created_at)}</small>
